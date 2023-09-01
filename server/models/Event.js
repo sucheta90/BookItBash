@@ -18,7 +18,7 @@ const eventSchema = new Schema({
         required: true,
     },
     venue: [venueSchema],
-    images: [imageSchema],
+    image: [imageSchema],
     ticketLink: {
         type: String,
         required: true,
@@ -29,8 +29,8 @@ const eventSchema = new Schema({
     priceRangeMax: {
         type: Number,
     },
-    segements: {
-        segementId: {
+    segment: {
+        segmentId: {
             type: String,
             required: true,
         },
@@ -39,7 +39,7 @@ const eventSchema = new Schema({
         },
 
     },
-    genres: {
+    genre: {
         genreId: {
             type: String,
             required: true,
@@ -48,7 +48,7 @@ const eventSchema = new Schema({
             type: String,
         },
     },
-    subGenres: {
+    subGenre: {
         subGenreId: {
             type: String,
             required: true,
