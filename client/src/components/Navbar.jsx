@@ -10,7 +10,6 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from "@nextui-org/react";
-import { AcmeLogo } from "./AcmeLogo.jsx";
 import { useLocation } from "react-router-dom";
 import Logo from "../assets/BookItBash.png";
 
