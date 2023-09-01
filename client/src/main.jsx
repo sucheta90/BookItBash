@@ -4,6 +4,7 @@ import App from './App.jsx';
 import './index.css';
 import { NextUIProvider } from '@nextui-org/react';
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
+import Login from './pages/Login.jsx';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/Login',
-        // element: <Login />
+        element: <Login />
       },
       {
         path: '/Signup',
