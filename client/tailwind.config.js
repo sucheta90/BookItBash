@@ -18,14 +18,14 @@ export default {
         11: "3.5rem",
       },
       maxWidth: {
-        'desktop': '1820px',
+        desktop: "1820px",
       },
       padding: {
-        '5px': '5px',
+        "5px": "5px",
       },
       margin: {
-        '1': '1%'
-      }
+        1: "1%",
+      },
     },
     fontSize: {
       sm: "0.8rem",
@@ -60,6 +60,9 @@ export default {
               DEFAULT: "#916DD5",
               foreground: "#ffffff",
             },
+            secondary: {
+              50: "#F2F168",
+            },
             focus: "#F182F6",
           },
           layout: {
@@ -81,5 +84,3 @@ export default {
     }),
   ],
 };
-
-
