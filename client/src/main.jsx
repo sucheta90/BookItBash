@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
+import Homepage from './pages/Homepage.jsx';
 import './index.css';
 import { NextUIProvider } from '@nextui-org/react';
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        // element: <Homepage/>
+        element: <Homepage/>
       },
       {
         path: '/Profile',
