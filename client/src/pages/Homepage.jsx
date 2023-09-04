@@ -15,12 +15,11 @@ export default function Homepage() {
         if(target.name === "keyword"){
             const val = target.value;
             setKeyWord(val);
-            // setGenre(target.value)
-        }
-
-        
+        } 
         
     }
+    
+    // Handles form submission logic
     const handleSubmit = async (e)=>{
        console.log(`inside handleSubmit`)
        let query = keyword
