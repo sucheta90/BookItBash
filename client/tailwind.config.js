@@ -22,9 +22,20 @@ export default {
       },
       padding: {
         "5px": "5px",
+        "10px": "7px",
+        "8px": "8px",
+        "16px": "16px",
+        5: "5%",
       },
       margin: {
         1: "1%",
+        3: "3%",
+        5: "5%",
+        8: "8%",
+        10: "10%",
+        20: "20%",
+        25: "25%",
+        50: "50%"
       },
     },
     fontSize: {
@@ -71,6 +82,7 @@ export default {
               small: "4px",
               medium: "6px",
               large: "8px",
+              "3xl": "24px"
             },
             borderWidth: {
               none: "0",

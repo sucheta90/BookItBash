@@ -1,0 +1,6 @@
+.max-w-\[1024px\] {
+    max-width: 1920px !important;
+}
+#Item:hover{
+    cursor: pointer !important;
+}
