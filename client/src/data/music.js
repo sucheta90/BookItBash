@@ -31,7 +31,7 @@ const musicGenres = [
   {
     role: "option",
     value: "KnvZfZ7vAeJ",
-    title: "classNameical",
+    title: "Classical",
     selected: "",
     className: "sc-fmWebE eXYfwN",
   },
@@ -134,7 +134,7 @@ const musicGenres = [
   {
     role: "option",
     value: "KnvZfZ7vAee",
-    title: "R&amp;B",
+    title: "R&B",
     selected: "",
     className: "sc-fmWebE eXYfwN",
   },
