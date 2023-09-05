@@ -9,6 +9,9 @@ const resolvers = {
             }
             throw AuthenticationError;
         },
+        event: async (parent, { eventId }) => {
+            return Event.findOne({ _id: eventId });
+          },
     },
 
     Mutation: {
@@ -34,7 +37,43 @@ const resolvers = {
 
             return { token, user };
         },
-
+        addEvent: async (parent, { eventId }, context) => {
+            if (context.user) {
+                const event = await Event.create({
+                  eventId
+                });
+        
+                await User.findOneAndUpdate(
+                  { _id: context.user._id },
+                  { $addToSet: { events: event._id } }
+                );
+        
+                return event;
+              }
+              throw AuthenticationError;
+              ('You need to be logged in!');
+            },
+        removeUser: async (parent, args, context) => {
+            if (context.user) {
+                return User.findOneAndDelete({ _id: context.user._id });
+            }
+            throw AuthenticationError;
+        },
+        removeEvent: async (parent, { eventId }, context) => {
+            if (context.user) {
+              const event = await Event.findOneAndDelete({
+                _id: eventId,
+              });
+      
+              await User.findOneAndUpdate(
+                { _id: context.user._id },
+                { $pull: { events: event._id } }
+              );
+      
+              return event;
+            }
+            throw AuthenticationError;
+          },
     },
 
 };

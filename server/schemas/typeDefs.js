@@ -67,11 +67,17 @@ type Auth {
 
 type Query {
     me: User
+    event(eventId: ID!): Event
 }
 
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(username: String!, password: String!): Auth
+
+    addEvent(eventId: ID!): Event
+
+    removeUser: User
+    removeEvent(eventId: ID!): Event
 }
 
 `
