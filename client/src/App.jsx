@@ -1,4 +1,5 @@
 import './App.css';
+import { useState } from 'react';
 import {
   ApolloClient,
   InMemoryCache,
@@ -8,6 +9,8 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
 import Navtab from './components/navbar/Navbar';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 // import Header from './components/Header';
 // import Footer from './components/Footer';
@@ -37,9 +40,51 @@ const client = new ApolloClient({
 });
 
 function App() {
+  // const location = useLocation();
+  // const {onOpen, onOpenChange, onClose} = useDisclosure();
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+  
+  function handleShowForm(e){
+    if(e.target.name === "login"){
+      setShowLogin(!showLogin)
+      // onOpen()
+    }else{
+      setShowSignup(!showSignup)
+      // onOpen()
+    }
+    
+  }
+  // function redirectModal(e){
+  //   if(e.target.name === "login"){
+  //     setShowLogin(!showLogin)
+  //     // onOpen()
+  //   }else{
+  //     setShowSignup(!showSignup)
+  //     // onOpen()
+  //   }
+  // }
+  function closeModal(e){
+    if(e.target.name === "closeLogin"){
+      setShowLogin(!showLogin)
+      console.log('clicked from login') 
+      
+    }
+    if(e.target.name === "closeSignup"){
+      setShowSignup(!showSignup)
+      console.log('clicked from login')
+      
+    }
+  }
+
+  // const [showSignup, setShowSignup] = useState(false);
   return (
     <ApolloProvider client={client}>
-      <Navtab/>
+      <Navtab onOpen={handleShowForm}/>
+      <Login isOpen={showLogin}   onClose={closeModal} handleShowForm={handleShowForm}/>
+      
+      <Signup isOpen={showSignup}  onClose={closeModal}/>
+
       <div >
         <div className='purple-dark h-full w-full flex justify-center'>
           <Outlet />

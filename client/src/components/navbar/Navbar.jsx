@@ -15,7 +15,7 @@ import { Link as NavtabLink } from "react-router-dom";
 import Logo from "../../assets/BookItBash.png";
 import "./navbar.css";
 
-export default function Navtab() {
+export default function Navtab(props) {
   const currentPage = useLocation().pathname;
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const loggedOutItems = [
@@ -59,9 +59,14 @@ export default function Navtab() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         {loggedOutItems
           .map((navItem) => (
-            <NavtabLink key={navItem.id} to={navItem.path}>
+            
             <NavbarItem key={navItem.id} className="text-primary-50 mx-25" id = "Item">
-              <Link
+              <NavtabLink key={navItem.id} to={navItem.path} className={
+                  currentPage === navItem.path
+                    ? "text-primary-50 font-bold active"
+                    : "text-primary-50 font-bold"
+                } > {navItem.pathname} </NavtabLink>
+              {/* <Link
                 to={navItem.path}
                 className={
                   currentPage === navItem.path
@@ -70,9 +75,9 @@ export default function Navtab() {
                 } 
               >
                 {navItem.pathname}
-              </Link>
+              </Link> */}
             </NavbarItem>
-            </NavtabLink>
+           
           ))
           .slice(0, 2)}
       </NavbarContent>
@@ -80,6 +85,10 @@ export default function Navtab() {
         <NavbarItem className="hidden lg:flex">
           <Button
             to={loggedOutItems[2].path}
+            // eslint-disable-next-line react/prop-types
+            name="login"
+            // eslint-disable-next-line react/prop-types
+            onPress={props.onOpen}
             className="text-primary-900 bg-primary-50 w-[80.69px] h-[40px] px-16px rounded-medium justify-center text-base"
           >
             Login
@@ -92,6 +101,9 @@ export default function Navtab() {
             className="text-primary-900 bg-primary-50 text-base"
             href="#"
             variant="flat"
+            name="signup"
+            // eslint-disable-next-line react/prop-types
+            onPress={props.onOpen}
           >
             Sign Up
           </Button>
@@ -100,9 +112,12 @@ export default function Navtab() {
       <NavbarMenu className=" purple-dark bg-primary-900">
         {loggedOutItems
           .map((menuItems) => (
-            <NavtabLink key={menuItems.id} to={menuItems.path}>
+            
             <NavbarMenuItem key={menuItems.id}>
-              <Link
+              <NavtabLink key={menuItems.id} to={menuItems.path} className="w-full text-primary-50 my-8" size="lg">
+                {menuItems.pathname}
+              </NavtabLink>
+              {/* <Link
                 // color={
                 //   menuItems.id === 2
                 //     ? "primary"
@@ -115,9 +130,9 @@ export default function Navtab() {
                 size="lg"
               >
                 {menuItems.pathname}
-              </Link>
+              </Link> */}
             </NavbarMenuItem>
-            </NavtabLink>
+            
           ))
           .slice(0, 3)}
       </NavbarMenu>
