@@ -9,7 +9,6 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
 import Navtab from './components/navbar/Navbar';
-import { useDisclosure } from '@nextui-org/react';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 

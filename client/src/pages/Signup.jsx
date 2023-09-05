@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import {Link} from "react-router-dom"
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input} from "@nextui-org/react";
 
 
 export default function Signup(props) {
-  // const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  
 
   return (
     <>
