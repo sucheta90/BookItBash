@@ -37,7 +37,8 @@ const resolvers = {
 
       return { token, user };
     },
-    addEvent: async (parent, {
+    addEvent: async (parent, 
+      {
       event: {
         eventId,
         name,
@@ -51,8 +52,10 @@ const resolvers = {
         genre,
         subGenre,
       }
-    }, context) => {
-      if (context.user) {
+    }
+    , context) => {
+      // if (context.user) {
+        // console.log(event);
       // console.log(args);
       const event = await Event.create(
         {
@@ -80,13 +83,15 @@ const resolvers = {
       );
 
       await User.findOneAndUpdate(
-        { _id: context.user._id },
+        // "64f790ff1d34174571bdb4b6"
+        // { _id: context.user._id },
+        { _id: "64f790ff1d34174571bdb4b6" },
         { $addToSet: { events: event._id } }
       );
 
       return event;
-      }
-      throw AuthenticationError;
+      // }
+      // throw AuthenticationError;
       ('You need to be logged in!');
     },
     removeUser: async (parent, { userId }) => {

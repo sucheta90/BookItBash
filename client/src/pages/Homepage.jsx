@@ -2,13 +2,18 @@
 import { useState, useEffect } from "react";
 import { Card, Button, Input, Link } from "@nextui-org/react";
 import { GoStar, GoStarFill } from "react-icons/go";
+import { useMutation } from "@apollo/client";
+import { ADD_EVENT } from "../utils/mutations";
 import axios from "axios";
 export default function Homepage() {
-  //   const [isActive, setIsActive] = useState(false);
-
   const [isMobile, setIsMobile] = useState(true);
   const [searchData, setSearchData] = useState([]);
   const [activeStates, setActiveStates] = useState([]);
+  const [keyword, setKeyWord] = useState("");
+
+  // eslint-disable-next-line no-unused-vars
+  const [addEvent, { error, loading, data }] = useMutation(ADD_EVENT);
+
   useEffect(() => {
     const change = () => {
       if (window.innerWidth <= 375) {
@@ -22,7 +27,6 @@ export default function Homepage() {
   }, []);
 
   // Actual searched value
-  const [keyword, setKeyWord] = useState("");
 
   const handleChange = (e) => {
     const target = e.target;
@@ -60,6 +64,59 @@ export default function Homepage() {
     setActiveStates(updatedActiveStates);
   };
 
+  const handleSaveEvent = async (result) => {
+    console.log(result);
+    const event = {
+        eventId: result.id,
+        genre: {
+          genreId: result.classifications[0].genre.id,
+          name: result.classifications[0].genre.name,
+        },
+        image: [
+          {
+            fallback: result.images[4].fallback,
+            height: result.images[4].height,
+            link: result.images[4].url,
+            ratio: result.images[4].ratio,
+            width: result.images[4].width,
+          },
+        ],
+        name: result.name,
+        priceRangeMax: result.priceRanges?.[0].max ?? 0,
+        priceRangeMin: result.priceRanges?.[0].min ?? 0,
+        segment: {
+          name: result.classifications[0].segment.name,
+          segmentId: result.classifications[0].segment.id,
+        },
+        subGenre: {
+          name: result.classifications[0].subGenre?.name ?? "N/A",
+          subGenreId: result.classifications[0].subGenre.id,
+        },
+        ticketLink: result.url,
+        type: result.type,
+        venue: [
+          {
+            address: result._embedded.venues[0].address.line1,
+            cityName: result._embedded.venues[0].city.name,
+            name: result._embedded.venues[0].name,
+            stateCode: result._embedded.venues[0].state.stateCode,
+            stateName: result._embedded.venues[0].state.name,
+            type: result._embedded.venues[0].type,
+            venueId: result._embedded.venues[0].id,
+          },
+        ],
+      };
+    // eslint-disable-next-line no-unused-vars
+    const { data } = await addEvent({
+      variables: {
+        event
+      },
+    });
+  };
+//   if (error) {
+//     console.log(error);
+//     return;
+//   }
   return (
     <Card className="purple-dark bg-primary-50 text-primary-900 justify-center w-full">
       <div className="homePageTitle font-bold text-5xl mb-5 mt-10 ml-10">
@@ -81,10 +138,14 @@ export default function Homepage() {
               name="keyword"
               value={keyword}
               onChange={handleChange}
-              style={{lineHeight: "50px"}}
+              style={{ lineHeight: "50px" }}
             />
             <Button
-              className={isMobile ? "text-base w-[80.69px] h-[55px] px-16px rounded-medium bg-primary-900 text-primary-50" : "text-base w-[80.69px] h-[40px] px-16px rounded-medium bg-primary-900 text-primary-50"}
+              className={
+                isMobile
+                  ? "text-base w-[80.69px] h-[55px] px-16px rounded-medium bg-primary-900 text-primary-50"
+                  : "text-base w-[80.69px] h-[40px] px-16px rounded-medium bg-primary-900 text-primary-50"
+              }
               onClick={handleSubmit}
             >
               Find
@@ -119,6 +180,7 @@ export default function Homepage() {
                   <GoStar
                     onClick={() => {
                       toggleActive(index);
+                      handleSaveEvent(result);
                     }}
                     className="w-[30px] h-[30px] text-secondary-50"
                   />
@@ -138,7 +200,9 @@ export default function Homepage() {
               from-primary-900 to-primary-500 
               text-primary-50 shadow-lg w-full"
               >
-                <Link to={result.url} className="purple-dark text-primary-50">Click to see more</Link>
+                <Link to={result.url} className="purple-dark text-primary-50">
+                  Click to see more
+                </Link>
               </Button>
             </div>
           </div>
