@@ -55,6 +55,15 @@ function App() {
     }
     
   }
+  // function redirectModal(e){
+  //   if(e.target.name === "login"){
+  //     setShowLogin(!showLogin)
+  //     // onOpen()
+  //   }else{
+  //     setShowSignup(!showSignup)
+  //     // onOpen()
+  //   }
+  // }
   function closeModal(e){
     if(e.target.name === "closeLogin"){
       setShowLogin(!showLogin)
@@ -72,7 +81,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Navtab onOpen={handleShowForm}/>
-      <Login isOpen={showLogin}   onClose={closeModal}/>
+      <Login isOpen={showLogin}   onClose={closeModal} handleShowForm={handleShowForm}/>
       
       <Signup isOpen={showSignup}  onClose={closeModal}/>
 
