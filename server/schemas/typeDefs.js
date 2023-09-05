@@ -43,19 +43,16 @@ type Image {
 }
 
 type Segment {
-    _id: ID
     segmentId: String!
     name: String
 }
 
 type Genre {
-    _id: ID
     genreId: String!
     name: String
 }
 
 type SubGenre {
-    _id: ID
     subGenreId: String!
     name: String
 }
@@ -65,13 +62,66 @@ type Auth {
     user: User
   }
 
+
+input EventData {
+    eventId: String!
+    name: String!
+    type: String!
+    venue: [VenueData]
+    image: [ImageData]
+    ticketLink: String!
+    priceRangeMin: Int
+    priceRangeMax: Int
+    segment: SegmentData
+    genre: GenreData
+    subGenre: SubGenreData
+}
+
+input VenueData {
+    venueId: String!
+    name: String!
+    type: String
+    address: String!
+    cityName: String!
+    stateName: String!
+    stateCode: String!
+}
+
+input ImageData {
+    ratio: String
+    link: String!
+    height: Int
+    width: Int
+    fallback: Boolean
+}
+input SegmentData {
+    segmentId: String
+    name: String
+}
+
+input GenreData {
+    genreId: String
+    name: String
+}
+
+input SubGenreData {
+    subGenreId: String
+    name: String
+}
+
 type Query {
     me: User
+    event(_id: ID!): Event
 }
 
 type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(username: String!, password: String!): Auth
+
+    addEvent(event: EventData): Event
+
+    removeUser(userId: ID!): User
+    removeEvent(_id: ID!): Event
 }
 
 `
