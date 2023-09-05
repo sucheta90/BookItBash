@@ -1,5 +1,5 @@
-
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Link} from "@nextui-org/react";
+import {Link} from "react-router-dom"
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input} from "@nextui-org/react";
 
 
 export default function Signup(props) {
@@ -7,7 +7,6 @@ export default function Signup(props) {
 
   return (
     <>
-      {/* <Button onPress={onOpen} color="primary">Open Modal</Button> */}
       <Modal 
         // eslint-disable-next-line react/prop-types
         isOpen={props.isOpen} 
@@ -17,8 +16,7 @@ export default function Signup(props) {
         backdrop="blur"
       >
         <ModalContent>
-          {(onClose) => (
-            <>
+              
               <ModalHeader className="flex flex-col gap-1">Sign Up</ModalHeader>
               <ModalBody>
                 <Input
@@ -40,28 +38,19 @@ export default function Signup(props) {
                   variant="bordered"
                 />
                 <div className="flex py-2 px-1 justify-between">
-                  {/* <Checkbox
-                    classNames={{
-                      label: "text-small",
-                    }}
-                  >
-                    Remember me
-                  </Checkbox> */}
-                  {/* <Link color="primary" href="#" size="sm">
-                    Forgot password?
-                  </Link> */}
+                  <Link className="text-primary" size="sm">
+                   Already a user?
+                  </Link>
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button color="danger" variant="flat" onPress={props.onClose} name="closeSignup">
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button color="primary" >
                   Sign up
                 </Button>
               </ModalFooter>
-            </>
-          )}
         </ModalContent>
       </Modal>
     </>

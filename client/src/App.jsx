@@ -41,31 +41,41 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const {onOpen} = useDisclosure();
+  // const location = useLocation();
+  // const {onOpen, onOpenChange, onClose} = useDisclosure();
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   
   function handleShowForm(e){
     if(e.target.name === "login"){
       setShowLogin(!showLogin)
-      onOpen()
+      // onOpen()
     }else{
       setShowSignup(!showSignup)
-      onOpen()
+      // onOpen()
     }
     
   }
-  function onOpenChange(){
-    
+  function closeModal(e){
+    if(e.target.name === "closeLogin"){
+      setShowLogin(!showLogin)
+      console.log('clicked from login') 
+      
+    }
+    if(e.target.name === "closeSignup"){
+      setShowSignup(!showSignup)
+      console.log('clicked from login')
+      
+    }
   }
 
   // const [showSignup, setShowSignup] = useState(false);
   return (
     <ApolloProvider client={client}>
       <Navtab onOpen={handleShowForm}/>
-      <Login isOpen={showLogin} onOpenChange={onOpenChange}/>
+      <Login isOpen={showLogin}   onClose={closeModal}/>
       
-      <Signup isOpen={showSignup} onOpenChange={onOpenChange}/>
+      <Signup isOpen={showSignup}  onClose={closeModal}/>
 
       <div >
         <div className='purple-dark h-full w-full flex justify-center'>

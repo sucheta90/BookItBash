@@ -1,16 +1,11 @@
 
 // eslint-disable-next-line no-unused-vars
 import React from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Link, useDisclosure} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Link} from "@nextui-org/react";
 
 
 export default function Login(props) {
-  const  {onClose} = useDisclosure();
-
-  function goToSignup(){
-    
-  }
-
+  
   return (
     <>
       <Modal 
@@ -22,8 +17,6 @@ export default function Login(props) {
         backdrop="blur"
       >
         <ModalContent>
-          {(onClose) => (
-            <>
               <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
               <ModalBody>
                 <Input
@@ -52,15 +45,15 @@ export default function Login(props) {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button color="danger" variant="flat" onPress={props.onClose} name="closeLogin">
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button color="primary" >
                   Log in
                 </Button>
               </ModalFooter>
-            </>
-          )}
+            
+        
         </ModalContent>
       </Modal>
     </>
