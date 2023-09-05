@@ -1,4 +1,5 @@
 import './App.css';
+import { useState } from 'react';
 import {
   ApolloClient,
   InMemoryCache,
@@ -8,6 +9,9 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { Outlet } from 'react-router-dom';
 import Navtab from './components/navbar/Navbar';
+import { useDisclosure } from '@nextui-org/react';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 // import Header from './components/Header';
 // import Footer from './components/Footer';
@@ -37,9 +41,32 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const {onOpen} = useDisclosure();
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+  
+  function handleShowForm(e){
+    if(e.target.name === "login"){
+      setShowLogin(!showLogin)
+      onOpen()
+    }else{
+      setShowSignup(!showSignup)
+      onOpen()
+    }
+    
+  }
+  function onOpenChange(){
+    
+  }
+
+  // const [showSignup, setShowSignup] = useState(false);
   return (
     <ApolloProvider client={client}>
-      <Navtab/>
+      <Navtab onOpen={handleShowForm}/>
+      <Login isOpen={showLogin} onOpenChange={onOpenChange}/>
+      
+      <Signup isOpen={showSignup} onOpenChange={onOpenChange}/>
+
       <div >
         <div className='purple-dark h-full w-full flex justify-center'>
           <Outlet />
