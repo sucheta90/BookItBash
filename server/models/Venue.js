@@ -6,7 +6,6 @@ const venueSchema = new Schema({
 venueId: {
     type: String,
     required: true,
-    unique: true,
 },
 name: {
     type: String,
