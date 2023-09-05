@@ -52,25 +52,33 @@ export default function Homepage() {
   };
   return (
     <Card className="purple-dark bg-primary-50 text-primary-900 justify-center w-full">
-      <div className="homePageTitle font-bold text-5xl mb-20 mt-10 ml-10">
+      <div className="homePageTitle font-bold text-5xl mb-5 mt-10 ml-10">
         <h1>BookItBash</h1>
         {/* try using an onChange function for the mobile view of the h1 */}
         {isMobile && <h2>Fulfill all your booking needs!</h2>}
-        <div className="flex w-half flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4 ">
-        <Input
-          size="md"
-          type="text"
-          label="Search by Artist, Venue, City or State"
-          name="keyword"
-          value={keyword}
-          onChange={handleChange}
-        />
-        <Button size="md" onClick={handleSubmit}>
-          Find
-        </Button>
+        <div className="flex justify-center min-[425px]:justify-start
+         min-[425px]:flex-nowrap min-[425px]:w-[175%] 
+         min-[375px]:justify-start min-[375px]:w-[175%] 
+         min-[320px]:justify-start min-[320px]:w-[175%]">
+          <div className="flex w-[50%] md:flex-nowrap mb-6 md:mb-0 gap-4 mt-12.5">
+            <Input
+              className="h-[55px]"
+              type="text"
+              label="Search by Artist, Venue, City or State"
+              name="keyword"
+              value={keyword}
+              onChange={handleChange}
+            />
+            <Button
+              className="text-base w-[80.69px] h-[55px] px-16px rounded-medium bg-primary-900 text-primary-50"
+              onClick={handleSubmit}
+            >
+              Find
+            </Button>
+          </div>
+        </div>
       </div>
-      </div>
-      
+
       <Card className="h-[10rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1">
         <div className="eventDetails">
           <div className="flex flex-row w-full justify-between">
