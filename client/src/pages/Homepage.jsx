@@ -1,23 +1,23 @@
 // import React from "react";
 import { useState, useEffect } from "react";
-import { Card, Button, Input, Link, useDisclosure } from "@nextui-org/react";
+import { Card, Button, Input, useDisclosure } from "@nextui-org/react";
 import { GoStar, GoStarFill } from "react-icons/go";
 import { useMutation } from "@apollo/client";
 import { ADD_EVENT } from "../utils/mutations";
 import CardModal from "../components/Modals/CardModal";
 import axios from "axios";
 
-
 export default function Homepage() {
-  const [isMobile, setIsMobile] = useState(true);  
+  const [isMobile, setIsMobile] = useState(true);
   const [searchData, setSearchData] = useState([]);
-  const [activeStates, setActiveStates] = useState([]); 
+  const [activeStates, setActiveStates] = useState([]);
   const [keyword, setKeyWord] = useState(""); // keyword search to fetch data
+  const [openedEvent, setOpenedEvent] = useState(null); // for the modal button
 
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-  // Add event mutation 
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  // Add event mutation
   // eslint-disable-next-line no-unused-vars
-  const [addEvent, { error, loading, data }] = useMutation(ADD_EVENT); 
+  const [addEvent, { error, loading, data }] = useMutation(ADD_EVENT);
 
   // hook changes the state of isMobile on browser window resize
   useEffect(() => {
@@ -74,159 +74,170 @@ export default function Homepage() {
   const handleSaveEvent = async (result) => {
     console.log(result);
     const event = {
-        eventId: result.id,
-        genre: {
-          genreId: result.classifications[0].genre.id,
-          name: result.classifications[0].genre.name,
+      eventId: result.id,
+      genre: {
+        genreId: result.classifications[0].genre.id,
+        name: result.classifications[0].genre.name,
+      },
+      image: [
+        {
+          fallback: result.images[4].fallback,
+          height: result.images[4].height,
+          link: result.images[4].url,
+          ratio: result.images[4].ratio,
+          width: result.images[4].width,
         },
-        image: [
-          {
-            fallback: result.images[4].fallback,
-            height: result.images[4].height,
-            link: result.images[4].url,
-            ratio: result.images[4].ratio,
-            width: result.images[4].width,
-          },
-        ],
-        name: result.name,
-        priceRangeMax: result.priceRanges?.[0].max ?? 0,
-        priceRangeMin: result.priceRanges?.[0].min ?? 0,
-        segment: {
-          name: result.classifications[0].segment.name,
-          segmentId: result.classifications[0].segment.id,
+      ],
+      name: result.name,
+      priceRangeMax: result.priceRanges?.[0].max ?? 0,
+      priceRangeMin: result.priceRanges?.[0].min ?? 0,
+      segment: {
+        name: result.classifications[0].segment.name,
+        segmentId: result.classifications[0].segment.id,
+      },
+      subGenre: {
+        name: result.classifications[0].subGenre?.name ?? "N/A",
+        subGenreId: result.classifications[0].subGenre.id,
+      },
+      ticketLink: result.url,
+      type: result.type,
+      venue: [
+        {
+          address: result._embedded.venues[0].address.line1,
+          cityName: result._embedded.venues[0].city.name,
+          name: result._embedded.venues[0].name,
+          stateCode: result._embedded.venues[0].state.stateCode,
+          stateName: result._embedded.venues[0].state.name,
+          type: result._embedded.venues[0].type,
+          venueId: result._embedded.venues[0].id,
         },
-        subGenre: {
-          name: result.classifications[0].subGenre?.name ?? "N/A",
-          subGenreId: result.classifications[0].subGenre.id,
-        },
-        ticketLink: result.url,
-        type: result.type,
-        venue: [
-          {
-            address: result._embedded.venues[0].address.line1,
-            cityName: result._embedded.venues[0].city.name,
-            name: result._embedded.venues[0].name,
-            stateCode: result._embedded.venues[0].state.stateCode,
-            stateName: result._embedded.venues[0].state.name,
-            type: result._embedded.venues[0].type,
-            venueId: result._embedded.venues[0].id,
-          },
-        ],
-      };
+      ],
+    };
     // eslint-disable-next-line no-unused-vars
     const { data } = await addEvent({
       variables: {
-        event
+        event,
       },
     });
   };
-//   if (error) {
-//     console.log(error);
-//     return;
-//   }
+  //   if (error) {
+  //     console.log(error);
+  //     return;
+  //   }
   return (
     <>
-    <Card className="purple-dark bg-primary-50 text-primary-900 justify-center w-full">
-      <div className="homePageTitle font-bold text-5xl mb-5 mt-10 ml-10">
-        <h1>BookItBash</h1>
-        {/* try using an onChange function for the mobile view of the h1 */}
-        {isMobile && <h2>Fulfill all your booking needs!</h2>}
-        <div
-          className="flex justify-center min-[425px]:justify-start
+      <Card className="purple-dark bg-primary-50 text-primary-900 justify-center w-full">
+        <div className="homePageTitle font-bold text-5xl mb-5 mt-10 ml-10">
+          <h1>BookItBash</h1>
+          {/* try using an onChange function for the mobile view of the h1 */}
+          {isMobile && <h2>Fulfill all your booking needs!</h2>}
+          <div
+            className="flex justify-center min-[425px]:justify-start
          min-[425px]:flex-nowrap min-[425px]:w-[175%] 
          min-[375px]:justify-start min-[375px]:w-[175%] 
          min-[320px]:justify-start min-[320px]:w-[175%]"
-        >
-          <div className="flex w-[50%] md:flex-nowrap mb-6 md:mb-0 gap-4 mt-12.5">
-            <Input
-              className="h-[100%]"
-              type="text"
-              label={isMobile ? "Search by Artist, Venue, City or State" : ""}
-              placeholder={isMobile ? "" : "Search"}
-              name="keyword"
-              value={keyword}
-              onChange={handleChange}
-              style={{ lineHeight: "50px" }}
-            />
-            <Button
-              className={
-                isMobile
-                  ? "text-base w-[80.69px] h-[55px] px-16px rounded-medium bg-primary-900 text-primary-50"
-                  : "text-base w-[80.69px] h-[40px] px-16px rounded-medium bg-primary-900 text-primary-50"
-              }
-              onClick={handleSubmit}
-            >
-              Find
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {searchData.map((result, index) => (
-        <Card
-          className="h-[13rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
-          key={result.id}
-          id={result.id}
-        >
-          <div className="eventDetails">
-            <div className="flex flex-row w-full justify-between">
-              <img
-                src={result.images[4].url}
-                alt="Event Image"
-                className="w-[50px] h-[50px]"
+          >
+            <div className="flex w-[50%] md:flex-nowrap mb-6 md:mb-0 gap-4 mt-12.5">
+              <Input
+                className="h-[100%]"
+                type="text"
+                label={isMobile ? "Search by Artist, Venue, City or State" : ""}
+                placeholder={isMobile ? "" : "Search"}
+                name="keyword"
+                value={keyword}
+                onChange={handleChange}
               />
-              <button>
-                {activeStates[index] ? (
-                  <GoStarFill
-                    onClick={() => {
-                      toggleActive(index);
-                      // addevent
-                    }}
-                    className="w-[30px] h-[30px] text-secondary-50"
-                  />
-                ) : (
-                  <GoStar
-                    onClick={() => {
-                      toggleActive(index);
-                      handleSaveEvent(result);
-                    }}
-                    className="w-[30px] h-[30px] text-secondary-50"
-                  />
-                )}
-              </button>
-            </div>
-
-            <h1 className="eventTitle text-primary-50 font-bold">
-              {result.name}
-            </h1>
-            <h2 className="text-primary-50">{result._embedded.venues[0].name}, {result._embedded.venues[0].city.name}</h2>
-            {/* {console.log((`New Date obj ${new Date(result.dates.start.localDate)}`).split(" "))} */}
-            <h2 className="text-primary-50">{result.dates.start.localDate}</h2>
-            <div className="buyTicketButton">
               <Button
-                radius="full"
-                className="bg-gradient-to-tr 
-              from-primary-900 to-primary-500 
-              text-primary-50 shadow-lg w-full"
-              onPress={onOpen}
+                className={
+                  isMobile
+                    ? "text-base w-[80.69px] h-[55px] px-16px rounded-medium bg-primary-900 text-primary-50"
+                    : "text-base w-[80.69px] h-[40px] px-16px rounded-medium bg-primary-900 text-primary-50"
+                }
+                onClick={handleSubmit}
               >
-                {/* <Link to={result.url} className="purple-dark text-primary-50"> */}
-                  Click to see more
-                {/* </Link> */}
+                Find
               </Button>
             </div>
           </div>
-        </Card>
-      ))}
-      <Card className="h-[10rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1">
-        <div className="eventDetails">
-          <img src="" alt="Event Image" />
-          <h1 className="eventTitle text-primary-50 font-bold">Test</h1>
-          <h2 className="text-primary-50">Description</h2>
         </div>
+
+        {searchData.map((result, index) => (
+          <Card
+            className="h-[13rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
+            key={result.id}
+            id={result.id}
+          >
+            <div className="eventDetails">
+              <div className="flex flex-row w-full justify-between">
+                <img
+                  src={result.images[4].url}
+                  alt="Event Image"
+                  className="w-[50px] h-[50px]"
+                />
+                <button>
+                  {activeStates[index] ? (
+                    <GoStarFill
+                      onClick={() => {
+                        toggleActive(index);
+                        // addevent
+                      }}
+                      className="w-[30px] h-[30px] text-secondary-50"
+                    />
+                  ) : (
+                    <GoStar
+                      onClick={() => {
+                        toggleActive(index);
+                        handleSaveEvent(result);
+                      }}
+                      className="w-[30px] h-[30px] text-secondary-50"
+                    />
+                  )}
+                </button>
+              </div>
+
+              <h1 className="eventTitle text-primary-50 font-bold">
+                {result.name}
+              </h1>
+              <h2 className="text-primary-50">
+                {result._embedded.venues[0].name},{" "}
+                {result._embedded.venues[0].city.name}
+              </h2>
+              {/* {console.log((`New Date obj ${new Date(result.dates.start.localDate)}`).split(" "))} */}
+              <h2 className="text-primary-50">
+                {result.dates.start.localDate}
+              </h2>
+              <div className="buyTicketButton">
+                <Button
+                  radius="full"
+                  className="bg-gradient-to-tr 
+              from-primary-900 to-primary-500 
+              text-primary-50 shadow-lg w-full"
+                  onPress={() => {
+                    onOpen();
+                    setOpenedEvent(result);
+                  }}
+                >
+                  {/* <Link to={result.url} className="purple-dark text-primary-50"> */}
+                  Click to see more
+                  {/* </Link> */}
+                </Button>
+              </div>
+            </div>
+            <CardModal
+              onOpenChange={onOpenChange}
+              isOpen={isOpen}
+              event={openedEvent}
+            />
+          </Card>
+        ))}
+        <Card className="h-[10rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1">
+          <div className="eventDetails">
+            <img src="" alt="Event Image" />
+            <h1 className="eventTitle text-primary-50 font-bold">Test</h1>
+            <h2 className="text-primary-50">Description</h2>
+          </div>
+        </Card>
       </Card>
-    </Card>
-    <CardModal  onOpenChange={onOpenChange} isOpen={isOpen} />
     </>
   );
 }
