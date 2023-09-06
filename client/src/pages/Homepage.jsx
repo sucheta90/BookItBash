@@ -6,6 +6,7 @@ import { useMutation } from "@apollo/client";
 import { ADD_EVENT } from "../utils/mutations";
 import CardModal from "../components/Modals/CardModal";
 import axios from "axios";
+import { QUERY_ME } from "../utils/queries";
 
 export default function Homepage() {
   const [isMobile, setIsMobile] = useState(true);
@@ -18,7 +19,12 @@ export default function Homepage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   // Add event mutation
   // eslint-disable-next-line no-unused-vars
-  const [addEvent, { error, loading, data }] = useMutation(ADD_EVENT);
+  const [addEvent, { error, loading, data }] = useMutation(ADD_EVENT, {
+    refetchQueries: [
+      QUERY_ME,
+      'me'
+    ]
+  });
 
   // hook changes the state of isMobile on browser window resize
   useEffect(() => {
