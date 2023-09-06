@@ -7,6 +7,7 @@ import { ADD_EVENT } from "../utils/mutations";
 import CardModal from "../components/Modals/CardModal";
 import axios from "axios";
 import { QUERY_ME } from "../utils/queries";
+import {concerts} from "../data/concert.js";
 
 export default function Homepage() {
   const [isMobile, setIsMobile] = useState(true);
@@ -25,6 +26,8 @@ export default function Homepage() {
       'me'
     ]
   });
+
+  console.log('Demo Data', concerts);
 
   // hook changes the state of isMobile on browser window resize
   useEffect(() => {
@@ -237,13 +240,77 @@ export default function Homepage() {
             />
           </Card>
         ))}
-        <Card className="h-[10rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1">
-          <div className="eventDetails">
-            <img src="" alt="Event Image" />
-            <h1 className="eventTitle text-primary-50 font-bold">Test</h1>
-            <h2 className="text-primary-50">Description</h2>
-          </div>
-        </Card>
+
+        {searchData.length === 0 ?  concerts.map((result, index) => (
+          <Card
+            className="h-[13rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
+            key={result.id}
+            id={result.id}
+          >
+            <div className="eventDetails">
+              <div className="flex flex-row w-full justify-between">
+                <img
+                  src={result.images[4].url}
+                  alt="Event Image"
+                  className="w-[50px] h-[50px]"
+                />
+                <button>
+                  {activeStates[index] ? (
+                    <GoStarFill
+                      onClick={() => {
+                        toggleActive(index);
+                        // addevent
+                      }}
+                      className="w-[30px] h-[30px] text-secondary-50"
+                    />
+                  ) : (
+                    <GoStar
+                      onClick={() => {
+                        toggleActive(index);
+                        handleSaveEvent(result);
+                      }}
+                      className="w-[30px] h-[30px] text-secondary-50"
+                    />
+                  )}
+                </button>
+              </div>
+
+              <h1 className="eventTitle text-primary-50 font-bold">
+                {result.name}
+              </h1>
+              <h2 className="text-primary-50">
+                {result._embedded.venues[0].name},{" "}
+                {result._embedded.venues[0].city.name}
+              </h2>
+             
+              <h2 className="text-primary-50">
+                {result.dates.start.localDate}
+              </h2>
+              <div className="buyTicketButton">
+                <Button
+                  radius="full"
+                  className="bg-gradient-to-tr 
+              from-primary-900 to-primary-500 
+              text-primary-50 shadow-lg w-full"
+                  onPress={() => {
+                    onOpen();
+                    setOpenedEvent(result);
+                  }}
+                >
+                  
+                  Click to see more
+                
+                </Button>
+              </div>
+            </div>
+            <CardModal
+              onOpenChange={onOpenChange}
+              isOpen={isOpen}
+              event={openedEvent}
+            />
+          </Card>
+        )) : "" }
+
       </Card>
     </>
   );
