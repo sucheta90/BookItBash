@@ -2,8 +2,9 @@
 import { Card, Button, useDisclosure } from "@nextui-org/react";
 import { FaUser } from "react-icons/fa";
 import Auth from "../utils/auth";
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
+import {REMOVE_EVENT} from "../utils/mutations";
 import { useState, useEffect } from "react";
 import { GoStar, GoStarFill } from "react-icons/go";
 import ProfileCardModal from "../components/Modals/profileCardModal";
@@ -19,8 +20,24 @@ export default function Profile() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     // const { username: userParam } = useParams();
     const { loading, data } = useQuery( QUERY_ME);
+    const [removeEvent] = useMutation(REMOVE_EVENT,{
+      refetchQueries:[
+        QUERY_ME, 
+        'me'
+      ]
+      
+    });
 
-
+    const handleRemoveEvent = async (_id)=>{
+      try{
+        // eslint-disable-next-line no-unused-vars
+        const { data } = await removeEvent({
+          variables: {_id}
+        });
+      }catch(err){
+        console.log(err);
+      }
+    }
     useEffect(() => {
         const change = () => {
           if (window.innerWidth <= 375) {
@@ -87,7 +104,14 @@ console.log(user.events);
                   className="w-[50px] h-[50px]"
                 />
                 <button>
-                  {activeStates[index] ? (
+                <GoStarFill
+                      onClick={() => {
+                        toggleActive(index);
+                        handleRemoveEvent(result._id)
+                      }}
+                      className="w-[30px] h-[30px] text-secondary-50"
+                    />
+                  {/* {activeStates[index] ? (
                     <GoStar
                       onClick={() => {
                         toggleActive(index);
@@ -99,11 +123,11 @@ console.log(user.events);
                     <GoStarFill
                       onClick={() => {
                         toggleActive(index);
-                        // remove event
+                        handleRemoveEvent(result._id)
                       }}
                       className="w-[30px] h-[30px] text-secondary-50"
                     />
-                  )}
+                  )} */}
                 </button>
               </div>
 
@@ -146,3 +170,5 @@ console.log(user.events);
         </div>
     )
 }
+
+// alert({message: "No events found"})
