@@ -5,15 +5,19 @@ import { GoStar, GoStarFill } from "react-icons/go";
 import { useMutation } from "@apollo/client";
 import { ADD_EVENT } from "../utils/mutations";
 import axios from "axios";
+
+
 export default function Homepage() {
-  const [isMobile, setIsMobile] = useState(true);
+  const [isMobile, setIsMobile] = useState(true);  
   const [searchData, setSearchData] = useState([]);
-  const [activeStates, setActiveStates] = useState([]);
-  const [keyword, setKeyWord] = useState("");
+  const [activeStates, setActiveStates] = useState([]); 
+  const [keyword, setKeyWord] = useState(""); // keyword search to fetch data
 
+  // Add event mutation 
   // eslint-disable-next-line no-unused-vars
-  const [addEvent, { error, loading, data }] = useMutation(ADD_EVENT);
+  const [addEvent, { error, loading, data }] = useMutation(ADD_EVENT); 
 
+  // hook changes the state of isMobile on browser window resize
   useEffect(() => {
     const change = () => {
       if (window.innerWidth <= 375) {
@@ -26,8 +30,7 @@ export default function Homepage() {
     return () => window.removeEventListener("resize", change);
   }, []);
 
-  // Actual searched value
-
+  // State sets keyword as search parameter
   const handleChange = (e) => {
     const target = e.target;
     // this tracks the concert category
@@ -37,7 +40,7 @@ export default function Homepage() {
     }
   };
 
-  // Handles form submission logic
+  // Fetch call to the TicketMaster Api to get events based on user input and displayed on homepage as cards
   // eslint-disable-next-line no-unused-vars
   const handleSubmit = async (e) => {
     console.log(`inside handleSubmit`);
@@ -58,6 +61,8 @@ export default function Homepage() {
     console.log("This is the result:", search.data._embedded.events);
     console.log(searchData);
   };
+
+  // Function toggles Star color fill
   const toggleActive = (index) => {
     const updatedActiveStates = [...activeStates];
     updatedActiveStates[index] = !updatedActiveStates[index];
@@ -191,7 +196,8 @@ export default function Homepage() {
             <h1 className="eventTitle text-primary-50 font-bold">
               {result.name}
             </h1>
-            <h2 className="text-primary-50">{result._embedded.venues.name}</h2>
+            <h2 className="text-primary-50">{result._embedded.venues[0].name}, {result._embedded.venues[0].city.name}</h2>
+            {/* {console.log((`New Date obj ${new Date(result.dates.start.localDate)}`).split(" "))} */}
             <h2 className="text-primary-50">{result.dates.start.localDate}</h2>
             <div className="buyTicketButton">
               <Button
