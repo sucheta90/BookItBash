@@ -71,8 +71,8 @@ mutation addEvent($event: EventData) {
 `;
 
 export const REMOVE_EVENT= gql`
-mutation Mutation($id: ID!) {
-  removeEvent(_id: $id) {
+mutation Mutation($_id: ID!) {
+  removeEvent(_id: $_id) {
     _id
   }
 }
