@@ -3,21 +3,19 @@ import { Card, Button } from "@nextui-org/react";
 import { FaUser } from "react-icons/fa";
 import Auth from "../utils/auth";
 import { useQuery } from '@apollo/client';
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import {QUERY_ME } from '../utils/queries';
 import { Navigate, useParams } from "react-router-dom";
 
 
 export default function Profile() {
-    const { username: userParam } = useParams();
-    const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-        variables: { username: userParam },
-    });
+    // const { username: userParam } = useParams();
+    const { loading, data } = useQuery(QUERY_ME);
 
-    const user = data?.me || data?.user || {};
+    const user = data?.me || {};
     // navigate to personal profile page if username is yours
-    if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-        return <Navigate to="/me" replace={true} />;
-    }
+    // if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+    //     return <Navigate to="/me" replace={true} />;
+    // }
     if (loading) {
         return <div>Loading...</div>;
     }
