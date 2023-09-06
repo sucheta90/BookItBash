@@ -69,3 +69,19 @@ mutation addEvent($event: EventData) {
   }
 }
 `;
+
+export const REMOVE_EVENT= gql`
+mutation Mutation($id: ID!) {
+  removeEvent(_id: $id) {
+    _id
+  }
+}
+`
+
+export const REMOVE_USER= gql`
+mutation Mutation($userId: ID!) {
+  removeUser(userId: $userId) {
+    _id
+  }
+}
+`
