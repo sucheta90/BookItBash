@@ -1,8 +1,8 @@
-import { Card, Button } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
 import { FaUser } from "react-icons/fa";
 import Auth from "../utils/auth";
 import { useQuery } from '@apollo/client';
-import { QUERY_USER, QUERY_ME } from '../utils/queries';
+import { QUERY_ME } from '../utils/queries';
 import { Navigate, useParams } from "react-router-dom";
 
 
