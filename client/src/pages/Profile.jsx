@@ -65,16 +65,20 @@ export default function Profile() {
 
     if (!user?.username) {
         return (
-            <h4>
+            <div className="min-h-screen min-w-full purple-dark bg-primary-50 flex justify-center items-center">
+              <h4 className="purple-dark text-primary-900 font-bold text-[30px]">
                 You need to be logged in to see this. Use the navigation links above to
                 sign up or log in!
             </h4>
+            </div>
+            
         );
     }
 console.log(user.events);
     return (
         // if authenticated then show the profile of that user
         // need to loop over all of the saved via a loop on the array of events on the user
+        <div className="purple-dark bg-primary-50 w-full min-h-screen">
         <Card className="purple-dark bg-primary-50 text-primary-900 justify-center w-full">
             <Card className="h-[11rem] p-4 bg-primary-900 rounded-xl my-1 mx-1 flex-row flex-wrap min-[375px]:h-[13rem] min-[320px]:h-[15rem]">
                 <div className="mr-1">
@@ -82,13 +86,13 @@ console.log(user.events);
                 </div>
                 <div className="purple-dark text-primary-50">
                     <h1 className={isMobile ? "font-bold text-xl mb-10" : "font-bold text-[18px] mb-10 block"}>Username: {Auth.loggedIn() ? user.username : ""}</h1>
-                    <h1 className={isMobile ? "font-bold text-xl mb-10" : "font-bold text-[18px] mb-10"}>Email: {Auth.loggedIn() ? user.email : ""}</h1>
+                    <h1 className={isMobile ? "font-bold text-xl mb-10" : "font-bold text-[18px] mb-10 block"}>Email: {Auth.loggedIn() ? user.email : ""}</h1>
                     {/* <h1 className="font-bold text-xl my-10">Password:</h1> */}
                 </div>
             </Card>
             {user.events.length > 0 ? user.events.map((result, index) => (
           <Card
-            className="h-[10rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
+            className="h-[11rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
             key={result._id}
             id={result._id}
           >
@@ -163,6 +167,7 @@ console.log(user.events);
           </Card>
         )) : ""}
         </Card>
+        </div>
     )
 }
 

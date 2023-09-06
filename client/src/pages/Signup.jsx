@@ -49,16 +49,17 @@ export default function Signup(props) {
         placement="top-center"
         backdrop="blur"
       >
-        <ModalContent>
+        <ModalContent className="purple-dark bg-primary-900">
               
-              <ModalHeader className="flex flex-col gap-1">Sign Up</ModalHeader>
-              <ModalBody>
+              <ModalHeader className="purple-dark text-primary-50 flex flex-col gap-1">Sign Up</ModalHeader>
+              <ModalBody className="purple-dark text-primary-900">
                 <Input
                   autoFocus
                   label="Username"
                   placeholder="Enter a username"
                   variant="bordered"
                   name="username"
+                  className="purple-dark bg-foreground rounded-large"
                   value={userFormData.username}
                   onChange={handleInputChange}
                   required
@@ -69,6 +70,7 @@ export default function Signup(props) {
                   placeholder="Enter your email"
                   variant="bordered"
                   name="email"
+                  className="purple-dark bg-foreground rounded-large"
                   value={userFormData.email}
                   onChange={handleInputChange}
                   required
@@ -79,6 +81,7 @@ export default function Signup(props) {
                   type="password"
                   variant="bordered"
                   name="password"
+                  className="purple-dark bg-foreground rounded-large"
                   value={userFormData.password}
                   onChange={handleInputChange}
                   required
@@ -90,10 +93,10 @@ export default function Signup(props) {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={props.onClose} name="closeSignup">
+                <Button color="danger" className="text-foreground hover:opacity-80"  onPress={props.onClose} name="closeSignup">
                   Close
                 </Button>
-                <Button color="primary" onPress={handleSubmit}>
+                <Button className="bg-primary-50 text-primary-900 hover:opacity-80"  onPress={handleSubmit}>
                   Sign up
                 </Button>
               </ModalFooter>

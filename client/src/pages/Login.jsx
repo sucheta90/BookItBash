@@ -55,15 +55,16 @@ export default function Login(props) {
         placement="top-center"
         backdrop="blur"
       >
-        <ModalContent>
-              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
-              <ModalBody>
+        <ModalContent className="purple-dark bg-primary-900">
+              <ModalHeader className="purple-dark text-primary-50 flex flex-col gap-1">Log in</ModalHeader>
+              <ModalBody className="purple-dark text-primary-900">
                 <Input
                   autoFocus
                   label="username"
                   placeholder="Enter your username"
                   variant="bordered"
                   name="username"
+                  className="purple-dark bg-foreground rounded-large"
                   type="text"
                   value={userFormData.username}
                   onChange={handleInputChange}
@@ -74,6 +75,7 @@ export default function Login(props) {
                   type="password"
                   variant="bordered"
                   name="password"
+                  className="purple-dark bg-foreground rounded-large"
                   value={userFormData.password}
                   onChange={handleInputChange}
                 />
@@ -84,10 +86,10 @@ export default function Login(props) {
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={props.onClose} name="closeLogin">
+                <Button color="danger" className="text-foreground hover:opacity-80" onPress={props.onClose} name="closeLogin">
                   Close
                 </Button>
-                <Button color="primary" onPress={handleSubmit}>
+                <Button className="bg-primary-50 text-primary-900 hover:opacity-80" onPress={handleSubmit}>
                   Log in
                 </Button>
               </ModalFooter>
