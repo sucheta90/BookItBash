@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
 import {useState} from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input} from "@nextui-org/react";
 import { useMutation } from "@apollo/client";
@@ -24,6 +24,7 @@ export default function Signup(props) {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
+     
 
       Auth.login(data.addUser.token);
     }catch(err){
@@ -58,6 +59,7 @@ export default function Signup(props) {
                   placeholder="Enter a username"
                   variant="bordered"
                   name="username"
+                  value={userFormData.username}
                   onChange={handleInputChange}
                   required
                 />
@@ -67,6 +69,7 @@ export default function Signup(props) {
                   placeholder="Enter your email"
                   variant="bordered"
                   name="email"
+                  value={userFormData.email}
                   onChange={handleInputChange}
                   required
                 />
@@ -76,13 +79,14 @@ export default function Signup(props) {
                   type="password"
                   variant="bordered"
                   name="password"
+                  value={userFormData.password}
                   onChange={handleInputChange}
                   required
                 />
                 <div className="flex py-2 px-1 justify-between">
-                  <Link className="text-primary" size="sm" name='login' onClick={props.handleShowForm}>
+                  {/* <Link className="text-primary" size="sm" name='login' onClick={props.handleShowForm}>
                    Already a user?
-                  </Link>
+                  </Link> */}
                 </div>
               </ModalBody>
               <ModalFooter>

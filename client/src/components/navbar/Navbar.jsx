@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import {
   Navbar,
@@ -14,10 +15,13 @@ import { useLocation } from "react-router-dom";
 import { Link as NavtabLink } from "react-router-dom";
 import Logo from "../../assets/BookItBash.png";
 import "./navbar.css";
+import Auth from "../../utils/auth";
 
 export default function Navtab(props) {
   const currentPage = useLocation().pathname;
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  // const handleClick = ()=> setIsMenuOpen(!isMenuOpen);
   const loggedOutItems = [
     {
       id: 1,
@@ -49,14 +53,14 @@ export default function Navtab(props) {
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
+          className="md:hidden"
         />
         <NavbarBrand>
           <img src={Logo} alt="logo" width={64} />
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden md:flex gap-4" justify="center">
         {loggedOutItems
           .map((navItem) => (
             
@@ -80,21 +84,37 @@ export default function Navtab(props) {
            
           ))
           .slice(0, 2)}
+
       </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
+      {Auth.loggedIn()? ( <NavbarContent justify="end">
+        <NavbarItem className="hidden md:flex">
           <Button
             to={loggedOutItems[2].path}
             // eslint-disable-next-line react/prop-types
             name="login"
+            variant="flat"
+            // eslint-disable-next-line react/prop-types
+            onPress={Auth.logout}
+            className="text-primary-900 bg-primary-50 w-[80.69px] h-[40px] px-16px rounded-medium justify-center text-base hover:opacity-80"
+          >
+            Logout
+          </Button>
+        </NavbarItem>
+      </NavbarContent>):(<NavbarContent justify="end">
+        <NavbarItem className="hidden md:flex">
+          <Button
+            to={loggedOutItems[2].path}
+            // eslint-disable-next-line react/prop-types
+            name="login"
+            variant="flat"
             // eslint-disable-next-line react/prop-types
             onPress={props.onOpen}
-            className="text-primary-900 bg-primary-50 w-[80.69px] h-[40px] px-16px rounded-medium justify-center text-base"
+            className="text-primary-900 bg-primary-50 w-[80.69px] h-[40px] px-16px rounded-medium justify-center text-base hover:opacity-80"
           >
             Login
           </Button>
         </NavbarItem>
-        <NavbarItem>
+        <NavbarItem className="hidden md:flex">
           <Button
             as={Link}
             to={loggedOutItems[3].path}
@@ -108,16 +128,48 @@ export default function Navtab(props) {
             Sign Up
           </Button>
         </NavbarItem>
-      </NavbarContent>
+      </NavbarContent>)}
+     
+
+      {/* Mobile menu */}
       <NavbarMenu className=" purple-dark bg-primary-900">
-        {loggedOutItems
-          .map((menuItems) => (
-            
-            <NavbarMenuItem key={menuItems.id}>
-              <NavtabLink key={menuItems.id} to={menuItems.path} className="w-full text-primary-50 my-8" size="lg">
-                {menuItems.pathname}
-              </NavtabLink>
-              {/* <Link
+       
+        <NavbarMenuItem >
+            <NavtabLink  className="w-full text-primary-50 my-8" size="lg" to="/">
+              Home
+            </NavtabLink>
+        </NavbarMenuItem>
+        <NavbarMenuItem >
+            <NavtabLink  className="w-full text-primary-50 my-8" size="lg" to='/Profile'>
+              Profile
+            </NavtabLink>
+        </NavbarMenuItem>
+        {Auth.loggedIn()? (<NavbarMenuItem >
+            <NavtabLink  className="w-full text-primary-50 my-8" size="lg" onClick={Auth.logout}>
+              Logout
+            </NavtabLink>
+        </NavbarMenuItem>):
+        (
+          <>
+        <NavbarMenuItem >
+          <NavtabLink  className="w-full text-primary-50 my-8" size="lg" name='login' onClick={props.onOpen}>
+            Login
+          </NavtabLink>
+      </NavbarMenuItem>
+      <NavbarMenuItem >
+          <NavtabLink  className="w-full text-primary-50 my-8" size="lg" name='signup' onClick={props.onOpen}>
+            SignUp
+          </NavtabLink>
+      </NavbarMenuItem> 
+      </>)}
+        
+      </NavbarMenu>
+    </Navbar>
+  );
+}
+
+
+    {/* <Link
                 // color={
                 //   menuItems.id === 2
                 //     ? "primary"
@@ -131,11 +183,22 @@ export default function Navtab(props) {
               >
                 {menuItems.pathname}
               </Link> */}
+
+
+{/* Good code */}
+      {/* <NavbarMenu className=" purple-dark bg-primary-900">
+        {loggedOutItems
+          .map((menuItems) => (
+            
+            <NavbarMenuItem key={menuItems.id}>
+              <NavtabLink key={menuItems.id} to={menuItems.path} className="w-full text-primary-50 my-8" size="lg">
+                {menuItems.pathname}
+              </NavtabLink>
+          
             </NavbarMenuItem>
             
           ))
-          .slice(0, 3)}
-      </NavbarMenu>
-    </Navbar>
-  );
-}
+          .slice(0,2)}
+          
+          
+      </NavbarMenu> */}              
