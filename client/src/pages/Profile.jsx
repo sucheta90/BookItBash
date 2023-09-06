@@ -4,6 +4,7 @@ import Auth from "../utils/auth";
  
 
 export default function Profile(){
+    
     return (
         <Card className="purple-dark bg-primary-50 text-primary-900 justify-center w-full">
             <Card className="h-[10rem] p-4 bg-primary-900 rounded-xl my-1 mx-1 flex-row">

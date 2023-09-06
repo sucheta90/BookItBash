@@ -1,9 +1,10 @@
 // import React from "react";
 import { useState, useEffect } from "react";
-import { Card, Button, Input, Link } from "@nextui-org/react";
+import { Card, Button, Input, Link, useDisclosure } from "@nextui-org/react";
 import { GoStar, GoStarFill } from "react-icons/go";
 import { useMutation } from "@apollo/client";
 import { ADD_EVENT } from "../utils/mutations";
+import CardModal from "../components/Modals/CardModal";
 import axios from "axios";
 
 
@@ -13,6 +14,7 @@ export default function Homepage() {
   const [activeStates, setActiveStates] = useState([]); 
   const [keyword, setKeyWord] = useState(""); // keyword search to fetch data
 
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   // Add event mutation 
   // eslint-disable-next-line no-unused-vars
   const [addEvent, { error, loading, data }] = useMutation(ADD_EVENT); 
@@ -123,6 +125,7 @@ export default function Homepage() {
 //     return;
 //   }
   return (
+    <>
     <Card className="purple-dark bg-primary-50 text-primary-900 justify-center w-full">
       <div className="homePageTitle font-bold text-5xl mb-5 mt-10 ml-10">
         <h1>BookItBash</h1>
@@ -161,7 +164,7 @@ export default function Homepage() {
 
       {searchData.map((result, index) => (
         <Card
-          className="h-[11rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
+          className="h-[13rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
           key={result.id}
           id={result.id}
         >
@@ -205,10 +208,11 @@ export default function Homepage() {
                 className="bg-gradient-to-tr 
               from-primary-900 to-primary-500 
               text-primary-50 shadow-lg w-full"
+              onPress={onOpen}
               >
-                <Link to={result.url} className="purple-dark text-primary-50">
+                {/* <Link to={result.url} className="purple-dark text-primary-50"> */}
                   Click to see more
-                </Link>
+                {/* </Link> */}
               </Button>
             </div>
           </div>
@@ -222,5 +226,7 @@ export default function Homepage() {
         </div>
       </Card>
     </Card>
+    <CardModal  onOpenChange={onOpenChange} isOpen={isOpen} />
+    </>
   );
 }
