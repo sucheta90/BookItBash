@@ -130,25 +130,8 @@ export default function Navtab(props) {
         </NavbarItem>
       </NavbarContent>)}
      
-      {/* Good code */}
-      {/* <NavbarMenu className=" purple-dark bg-primary-900">
-        {loggedOutItems
-          .map((menuItems) => (
-            
-            <NavbarMenuItem key={menuItems.id}>
-              <NavtabLink key={menuItems.id} to={menuItems.path} className="w-full text-primary-50 my-8" size="lg">
-                {menuItems.pathname}
-              </NavtabLink>
-          
-            </NavbarMenuItem>
-            
-          ))
-          .slice(0,2)}
-          
-          
-      </NavbarMenu> */}
 
-      {/* Experiment */}
+      {/* Mobile menu */}
       <NavbarMenu className=" purple-dark bg-primary-900">
        
         <NavbarMenuItem >
@@ -200,3 +183,22 @@ export default function Navtab(props) {
               >
                 {menuItems.pathname}
               </Link> */}
+
+
+{/* Good code */}
+      {/* <NavbarMenu className=" purple-dark bg-primary-900">
+        {loggedOutItems
+          .map((menuItems) => (
+            
+            <NavbarMenuItem key={menuItems.id}>
+              <NavtabLink key={menuItems.id} to={menuItems.path} className="w-full text-primary-50 my-8" size="lg">
+                {menuItems.pathname}
+              </NavtabLink>
+          
+            </NavbarMenuItem>
+            
+          ))
+          .slice(0,2)}
+          
+          
+      </NavbarMenu> */}              
