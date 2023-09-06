@@ -57,7 +57,7 @@ export default {
         "purple-dark": {
           // this is a theme from nextUI with my own spin on the custom colors
           colors: {
-            background: "0D001A",
+            background: "#0D001A",
             foreground: "#ffffff",
             primary: {
               50: "#EBE0FF",
