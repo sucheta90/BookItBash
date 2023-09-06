@@ -7,16 +7,14 @@ import { Navigate, useParams } from "react-router-dom";
 
 
 export default function Profile() {
-    const { username: userParam } = useParams();
-    const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-        variables: { username: userParam },
-    });
+    // const { username: userParam } = useParams();
+    const { loading, data } = useQuery( QUERY_ME);
 
-    const user = data?.me || data?.user || {};
+    const user = data?.me || {};
     // navigate to personal profile page if username is yours
-    if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-        return <Navigate to="/me" replace={true} />;
-    }
+    // if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+    //     return <Navigate to="/me" replace={true} />;
+    // }
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -29,7 +27,7 @@ export default function Profile() {
             </h4>
         );
     }
-
+console.log(user);
     return (
         // if authenticated then show the profile of that user
         // need to loop over all of the saved via a loop on the array of events on the user
@@ -39,9 +37,9 @@ export default function Profile() {
                     <FaUser className="bg-foreground text-primary-500 w-[80px] h-[80px] rounded-full" />
                 </div>
                 <div className="purple-dark text-primary-50">
-                    <h1 className="font-bold text-xl mb-10">Username: {Auth.loggedIn() ? "Username" : ""}</h1>
-                    <h1 className="font-bold text-xl my-10">Email: {Auth.loggedIn() ? "email" : ""}</h1>
-                    <h1 className="font-bold text-xl my-10">Password:</h1>
+                    <h1 className="font-bold text-xl mb-10">Username: {Auth.loggedIn() ? user.username : ""}</h1>
+                    <h1 className="font-bold text-xl my-10">Email: {Auth.loggedIn() ? user.email : ""}</h1>
+                    {/* <h1 className="font-bold text-xl my-10">Password:</h1> */}
                 </div>
             </Card>
         </Card>
