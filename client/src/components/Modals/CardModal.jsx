@@ -9,11 +9,11 @@ const [scrollBehavior, setScrollBehavior] = React.useState("inside");
   return (
     <>
       {/* <Button onPress={onOpen}>Open Modal</Button> */}
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} backdrop="blur" scrollBehavior={scrollBehavior}>
-        <ModalContent>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} backdrop="blur" className="purple-dark bg-foreground" scrollBehavior={scrollBehavior} >
+        <ModalContent className="purple-dark bg-primary-50">
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">Modal Title</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">{event.name}</ModalHeader>
               <ModalBody>
                 <p> 
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -34,11 +34,11 @@ const [scrollBehavior, setScrollBehavior] = React.useState("inside");
                 </p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="danger" className="text-primary-50" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
+                <Button className="bg-primary-500 text-primary-50" onPress={onClose}>
+                  Buy Ticket
                 </Button>
               </ModalFooter>
             </>

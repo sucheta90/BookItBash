@@ -215,6 +215,7 @@ export default function Homepage() {
               </Button>
             </div>
           </div>
+          <CardModal  onOpenChange={onOpenChange} isOpen={isOpen} event={result} />
         </Card>
       ))}
       <Card className="h-[10rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1">
@@ -225,7 +226,6 @@ export default function Homepage() {
         </div>
       </Card>
     </Card>
-    <CardModal  onOpenChange={onOpenChange} isOpen={isOpen} event={searchData} />
     </>
   );
 }
