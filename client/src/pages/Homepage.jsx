@@ -106,7 +106,7 @@ export default function Homepage() {
           address: result._embedded.venues[0].address.line1,
           cityName: result._embedded.venues[0].city.name,
           name: result._embedded.venues[0].name,
-          stateCode: result._embedded.venues[0].state.stateCode,
+          stateCode: result._embedded.venues[0].state?.stateCode ?? "N/A",
           stateName: result._embedded.venues[0].state.name,
           type: result._embedded.venues[0].type,
           venueId: result._embedded.venues[0].id,
