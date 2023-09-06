@@ -1,9 +1,11 @@
-import { Card } from "@nextui-org/react";
+import { Card, Button } from "@nextui-org/react";
 import { FaUser } from "react-icons/fa";
- 
+import Auth from "../utils/auth"
 
 export default function Profile(){
     return (
+        // if authenticated then show the profile of that user
+        // need to loop over all of the saved via a loop on the array of events on the user
         <Card className="purple-dark bg-primary-50 text-primary-900 justify-center w-full">
             <Card className="h-[10rem] p-4 bg-primary-900 rounded-xl my-1 mx-1 flex-row">
                 <div className="mr-1">

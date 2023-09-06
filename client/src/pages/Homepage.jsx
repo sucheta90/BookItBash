@@ -138,7 +138,6 @@ export default function Homepage() {
               name="keyword"
               value={keyword}
               onChange={handleChange}
-              style={{ lineHeight: "50px" }}
             />
             <Button
               className={
