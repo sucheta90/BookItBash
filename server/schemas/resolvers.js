@@ -1,11 +1,11 @@
-const { User, Event } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { User, Event } = require("../models");
+const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('events');
+        return User.findOne({ _id: context.user._id }).populate("events");
       }
       throw AuthenticationError;
     },
@@ -37,28 +37,29 @@ const resolvers = {
 
       return { token, user };
     },
-    addEvent: async (parent, 
+    addEvent: async (
+      parent,
       {
-      event: {
-        eventId,
-        name,
-        type,
-        venue,
-        image,
-        ticketLink,
-        priceRangeMin,
-        priceRangeMax,
-        segment,
-        genre,
-        subGenre,
-      }
-    }
-    , context) => {
-      // if (context.user) {
+        event: {
+          eventId,
+          name,
+          type,
+          venue,
+          image,
+          ticketLink,
+          priceRangeMin,
+          priceRangeMax,
+          segment,
+          genre,
+          subGenre,
+        },
+      },
+      context
+    ) => {
+      if (context.user) {
         // console.log(event);
-      // console.log(args);
-      const event = await Event.create(
-        {
+        // console.log(args);
+        const event = await Event.create({
           eventId,
           name,
           type,
@@ -79,20 +80,20 @@ const resolvers = {
             subGenreId: subGenre.subGenreId,
             name: subGenre.name,
           },
-        }
-      );
+        });
 
-      await User.findOneAndUpdate(
-        // "64f790ff1d34174571bdb4b6"
-        // { _id: context.user._id },
-        { _id: "64f790ff1d34174571bdb4b6" },
-        { $addToSet: { events: event._id } }
-      );
+        await User.findOneAndUpdate(
+          // "64f790ff1d34174571bdb4b6"
+          { _id: context.user._id },
+          // { _id: "64f790ff1d34174571bdb4b6" },
+          { $addToSet: { events: event._id } }
+        );
 
-      return event;
-      // }
-      // throw AuthenticationError;
-      ('You need to be logged in!');
+        return event;
+      }
+
+      throw AuthenticationError;
+      ("You need to be logged in!");
     },
     removeUser: async (parent, { userId }) => {
       return User.findOneAndDelete({ _id: userId });
@@ -100,7 +101,7 @@ const resolvers = {
     removeEvent: async (parent, { _id }, context) => {
       if (context.user) {
         const event = await Event.findOneAndDelete({
-          _id
+          _id,
         });
 
         await User.findOneAndUpdate(
@@ -113,7 +114,6 @@ const resolvers = {
       throw AuthenticationError;
     },
   },
-
 };
 
 module.exports = resolvers;
