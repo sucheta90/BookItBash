@@ -3,7 +3,7 @@
 import React from "react";
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 
-export default function CardModal({onOpen, onOpenChange, isOpen }) {
+export default function CardModal({onOpen, onOpenChange, isOpen, event }) {
 //   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 const [scrollBehavior, setScrollBehavior] = React.useState("inside");
   return (

@@ -1,6 +1,6 @@
 // import React from "react";
 import { useState, useEffect } from "react";
-import { Card, Button, Input, Link, useDisclosure } from "@nextui-org/react";
+import { Card, Button, Input, useDisclosure } from "@nextui-org/react";
 import { GoStar, GoStarFill } from "react-icons/go";
 import { useMutation } from "@apollo/client";
 import { ADD_EVENT } from "../utils/mutations";
@@ -226,7 +226,6 @@ export default function Homepage() {
         </div>
       </Card>
     </Card>
-    <CardModal  onOpenChange={onOpenChange} isOpen={isOpen} />
     </>
   );
 }
