@@ -14,6 +14,7 @@ export default function Homepage() {
   const [keyword, setKeyWord] = useState(""); // keyword search to fetch data
   const [openedEvent, setOpenedEvent] = useState(null); // for the modal button
 
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   // Add event mutation
   // eslint-disable-next-line no-unused-vars
@@ -101,18 +102,18 @@ export default function Homepage() {
       },
       ticketLink: result.url,
       type: result.type,
-      venue: [
-        {
-          address: result._embedded.venues[0].address.line1,
-          cityName: result._embedded.venues[0].city.name,
-          name: result._embedded.venues[0].name,
-          stateCode: result._embedded.venues[0].state.stateCode,
-          stateName: result._embedded.venues[0].state.name,
-          type: result._embedded.venues[0].type,
-          venueId: result._embedded.venues[0].id,
-        },
-      ],
-    };
+        venue: [
+          {
+            address: result._embedded.venues[0].address.line1,
+            cityName: result._embedded.venues[0].city.name,
+            name: result._embedded.venues[0].name,
+            stateCode: result._embedded.venues[0].state?.stateCode ?? "N/A",
+            stateName: result._embedded.venues[0].state.name,
+            type: result._embedded.venues[0].type,
+            venueId: result._embedded.venues[0].id,
+          },
+        ],
+      };
     // eslint-disable-next-line no-unused-vars
     const { data } = await addEvent({
       variables: {
@@ -120,10 +121,10 @@ export default function Homepage() {
       },
     });
   };
-  //   if (error) {
-  //     console.log(error);
-  //     return;
-  //   }
+  // if (error) {
+  //   console.log(error);
+  //   return;
+  // }
   return (
     <>
       <Card className="purple-dark bg-primary-50 text-primary-900 justify-center w-full">
