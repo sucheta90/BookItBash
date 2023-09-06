@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { Card, Button } from "@nextui-org/react";
 import { FaUser } from "react-icons/fa";
 import Auth from "../utils/auth";
