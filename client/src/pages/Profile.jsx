@@ -6,6 +6,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import {REMOVE_EVENT} from "../utils/mutations";
 import { useState, useEffect } from "react";
+// eslint-disable-next-line no-unused-vars
 import { GoStar, GoStarFill } from "react-icons/go";
 import ProfileCardModal from "../components/Modals/profileCardModal";
 // import { Navigate, useParams } from "react-router-dom";
