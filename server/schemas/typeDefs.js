@@ -15,8 +15,8 @@ type Event {
     venue: [Venue]
     image: [Image]
     ticketLink: String!
-    priceRangeMin: Int
-    priceRangeMax: Int
+    priceRangeMin: Float
+    priceRangeMax: Float
     segment: Segment
     genre: Genre
     subGenre: SubGenre
@@ -70,8 +70,8 @@ input EventData {
     venue: [VenueData]
     image: [ImageData]
     ticketLink: String!
-    priceRangeMin: Int
-    priceRangeMax: Int
+    priceRangeMin: Float
+    priceRangeMax: Float
     segment: SegmentData
     genre: GenreData
     subGenre: SubGenreData

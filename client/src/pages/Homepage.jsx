@@ -4,7 +4,6 @@ import { Card, Button, Input, useDisclosure } from "@nextui-org/react";
 import { GoStar, GoStarFill } from "react-icons/go";
 import { useMutation } from "@apollo/client";
 import { ADD_EVENT } from "../utils/mutations";
-import CardModal from "../components/Modals/CardModal";
 import axios from "axios";
 
 
@@ -106,7 +105,7 @@ export default function Homepage() {
             address: result._embedded.venues[0].address.line1,
             cityName: result._embedded.venues[0].city.name,
             name: result._embedded.venues[0].name,
-            stateCode: result._embedded.venues[0].state.stateCode,
+            stateCode: result._embedded.venues[0].state?.stateCode ?? "N/A",
             stateName: result._embedded.venues[0].state.name,
             type: result._embedded.venues[0].type,
             venueId: result._embedded.venues[0].id,
@@ -120,10 +119,10 @@ export default function Homepage() {
       },
     });
   };
-//   if (error) {
-//     console.log(error);
-//     return;
-//   }
+  if (error) {
+    console.log(error);
+    return;
+  }
   return (
     <>
     <Card className="purple-dark bg-primary-50 text-primary-900 justify-center w-full">
