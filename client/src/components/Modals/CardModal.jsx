@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import React from "react";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Link} from "@nextui-org/react";
 
 export default function CardModal({onOpen, onOpenChange, isOpen, event }) {
 //   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -13,24 +13,17 @@ const [scrollBehavior, setScrollBehavior] = React.useState("inside");
         <ModalContent className="purple-dark bg-primary-50">
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">{event.name}</ModalHeader>
-              <ModalBody>
+              <ModalHeader className="flex flex-col gap-1 purple-dark text-primary-900">{event.name}</ModalHeader>
+              <ModalBody className="purple-dark text-primary-900">
+                <img src={event.images[4].url} alt="event image" className="w-[200px] h-[200px]" />
+                <h2>Event Details:</h2>
+                <p>Venue: {event._embedded.venues[0].name}</p>
+                <p>{event._embedded.venues[0].address.line1}</p>
+                <p>{event._embedded.venues[0].city.name}, {event._embedded.venues[0].state.name}</p>
+                <h2>Event Description:</h2>
                 <p> 
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat consequat elit
-                  dolor adipisicing. Mollit dolor eiusmod sunt ex incididunt cillum quis. 
-                  Velit duis sit officia eiusmod Lorem aliqua enim laboris do dolor eiusmod. 
-                  Et mollit incididunt nisi consectetur esse laborum eiusmod pariatur 
-                  proident Lorem eiusmod et. Culpa deserunt nostrud ad veniam.
+                  {event._embedded.venues[0].name} is hosting a {event.classifications[0].segment.name.toLowerCase()} {event.type}. Types of music you will be able to listen
+                  to at our event include {event.classifications[0].genre.name.toLowerCase()} music.
                 </p>
               </ModalBody>
               <ModalFooter>
@@ -38,7 +31,7 @@ const [scrollBehavior, setScrollBehavior] = React.useState("inside");
                   Close
                 </Button>
                 <Button className="bg-primary-500 text-primary-50" onPress={onClose}>
-                  Buy Ticket
+                 <a href={event.url} target= "_blank" rel="noreferrer" >Buy Ticket</a> 
                 </Button>
               </ModalFooter>
             </>
