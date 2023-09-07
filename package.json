@@ -14,9 +14,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.0"
-  },
-  "dependencies": {
-    
+    "concurrently": "^8.2.0",
+    "vite-plugin-pwa": "^0.16.4",
+    "workbox-window": "^7.0.0"
   }
 }
