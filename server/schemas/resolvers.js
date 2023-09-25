@@ -52,6 +52,7 @@ const resolvers = {
           segment,
           genre,
           subGenre,
+          date,
         },
       },
       context
@@ -80,6 +81,7 @@ const resolvers = {
             subGenreId: subGenre.subGenreId,
             name: subGenre.name,
           },
+          date,
         });
 
         await User.findOneAndUpdate(

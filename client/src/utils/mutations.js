@@ -66,6 +66,7 @@ mutation addEvent($event: EventData) {
       name
       subGenreId
     }
+    date
   }
 }
 `;

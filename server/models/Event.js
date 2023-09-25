@@ -56,6 +56,9 @@ const eventSchema = new Schema({
             type: String,
         },
     },
+    date: {
+        type: String,
+    },
 
 });
 
