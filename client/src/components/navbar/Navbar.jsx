@@ -17,9 +17,12 @@ import Logo from "../../assets/BookItBash.png";
 import "./navbar.css";
 import Auth from "../../utils/auth";
 
-export default function Navtab(props) {
+export default function Navtab(props, { isMenuOpen, setIsMenuOpen }) {
   const currentPage = useLocation().pathname;
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  // const [] = React.useState(false);
+  const handleMenuItemClick = () => {
+    setIsMenuOpen(false);
+  };
 
   // const handleClick = ()=> setIsMenuOpen(!isMenuOpen);
   const loggedOutItems = [
@@ -63,13 +66,23 @@ export default function Navtab(props) {
       <NavbarContent className="hidden md:flex gap-4" justify="center">
         {loggedOutItems
           .map((navItem) => (
-            
-            <NavbarItem key={navItem.id} className="text-primary-50 mx-25" id = "Item">
-              <NavtabLink key={navItem.id} to={navItem.path} className={
+            <NavbarItem
+              key={navItem.id}
+              className="text-primary-50 mx-25"
+              id="Item"
+            >
+              <NavtabLink
+                key={navItem.id}
+                to={navItem.path}
+                className={
                   currentPage === navItem.path
                     ? "text-primary-50 font-bold active"
                     : "text-primary-50 font-bold"
-                } > {navItem.pathname} </NavtabLink>
+                }
+              >
+                {" "}
+                {navItem.pathname}{" "}
+              </NavtabLink>
               {/* <Link
                 to={navItem.path}
                 className={
@@ -81,95 +94,123 @@ export default function Navtab(props) {
                 {navItem.pathname}
               </Link> */}
             </NavbarItem>
-           
           ))
           .slice(0, 2)}
-
       </NavbarContent>
-      {Auth.loggedIn()? ( <NavbarContent justify="end">
-        <NavbarItem className="hidden md:flex">
-          <Button
-            to={loggedOutItems[2].path}
-            // eslint-disable-next-line react/prop-types
-            name="login"
-            variant="flat"
-            // eslint-disable-next-line react/prop-types
-            onPress={Auth.logout}
-            className="text-primary-900 bg-primary-50 w-[80.69px] h-[40px] px-16px rounded-medium justify-center text-base hover:opacity-80"
-          >
-            Logout
-          </Button>
-        </NavbarItem>
-      </NavbarContent>):(<NavbarContent justify="end">
-        <NavbarItem className="hidden md:flex">
-          <Button
-            to={loggedOutItems[2].path}
-            // eslint-disable-next-line react/prop-types
-            name="login"
-            variant="flat"
-            // eslint-disable-next-line react/prop-types
-            onPress={props.onOpen}
-            className="text-primary-900 bg-primary-50 w-[80.69px] h-[40px] px-16px rounded-medium justify-center text-base hover:opacity-80"
-          >
-            Login
-          </Button>
-        </NavbarItem>
-        <NavbarItem className="hidden md:flex">
-          <Button
-            as={Link}
-            to={loggedOutItems[3].path}
-            className="text-primary-900 bg-primary-50 text-base"
-            href="#"
-            variant="flat"
-            name="signup"
-            // eslint-disable-next-line react/prop-types
-            onPress={props.onOpen}
-          >
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>)}
-     
+      {Auth.loggedIn() ? (
+        <NavbarContent justify="end">
+          <NavbarItem className="hidden md:flex">
+            <Button
+              to={loggedOutItems[2].path}
+              // eslint-disable-next-line react/prop-types
+              name="login"
+              variant="flat"
+              // eslint-disable-next-line react/prop-types
+              onPress={Auth.logout}
+              className="text-primary-900 bg-primary-50 w-[80.69px] h-[40px] px-16px rounded-medium justify-center text-base hover:opacity-80"
+            >
+              Logout
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
+      ) : (
+        <NavbarContent justify="end">
+          <NavbarItem className="hidden md:flex">
+            <Button
+              to={loggedOutItems[2].path}
+              // eslint-disable-next-line react/prop-types
+              name="login"
+              variant="flat"
+              // eslint-disable-next-line react/prop-types
+              onPress={props.onOpen}
+              className="text-primary-900 bg-primary-50 w-[80.69px] h-[40px] px-16px rounded-medium justify-center text-base hover:opacity-80"
+            >
+              Login
+            </Button>
+          </NavbarItem>
+          <NavbarItem className="hidden md:flex">
+            <Button
+              as={Link}
+              to={loggedOutItems[3].path}
+              className="text-primary-900 bg-primary-50 text-base"
+              href="#"
+              variant="flat"
+              name="signup"
+              // eslint-disable-next-line react/prop-types
+              onPress={props.onOpen}
+            >
+              Sign Up
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
+      )}
 
       {/* Mobile menu */}
       <NavbarMenu className=" purple-dark bg-primary-900">
-       
-        <NavbarMenuItem >
-            <NavtabLink  className="w-full text-primary-50 my-8" size="lg" to="/">
-              Home
-            </NavtabLink>
+        <NavbarMenuItem>
+          <NavtabLink
+            className="w-full text-primary-50 my-8"
+            size="lg"
+            to="/"
+            onClick={handleMenuItemClick}
+          >
+            Home
+          </NavtabLink>
         </NavbarMenuItem>
-        <NavbarMenuItem >
-            <NavtabLink  className="w-full text-primary-50 my-8" size="lg" to='/Profile'>
-              Profile
-            </NavtabLink>
+        <NavbarMenuItem>
+          <NavtabLink
+            className="w-full text-primary-50 my-8"
+            size="lg"
+            to="/Profile"
+            onClick={handleMenuItemClick}
+          >
+            Profile
+          </NavtabLink>
         </NavbarMenuItem>
-        {Auth.loggedIn()? (<NavbarMenuItem >
-            <NavtabLink  className="w-full text-primary-50 my-8" size="lg" onClick={Auth.logout}>
+        {Auth.loggedIn() ? (
+          <NavbarMenuItem>
+            <NavtabLink
+              className="w-full text-primary-50 my-8"
+              size="lg"
+              onClick={() => {
+                Auth.logout();
+                handleMenuItemClick();
+              }}
+            >
               Logout
             </NavtabLink>
-        </NavbarMenuItem>):
-        (
+          </NavbarMenuItem>
+        ) : (
           <>
-        <NavbarMenuItem >
-          <NavtabLink  className="w-full text-primary-50 my-8" size="lg" name='login' onClick={props.onOpen}>
-            Login
-          </NavtabLink>
-      </NavbarMenuItem>
-      <NavbarMenuItem >
-          <NavtabLink  className="w-full text-primary-50 my-8" size="lg" name='signup' onClick={props.onOpen}>
-            SignUp
-          </NavtabLink>
-      </NavbarMenuItem> 
-      </>)}
-        
+            <NavbarMenuItem>
+              <NavtabLink
+                className="w-full text-primary-50 my-8"
+                size="lg"
+                name="login"
+                onClick={props.onOpen}
+              >
+                Login
+              </NavtabLink>
+            </NavbarMenuItem>
+            <NavbarMenuItem>
+              <NavtabLink
+                className="w-full text-primary-50 my-8"
+                size="lg"
+                name="signup"
+                onClick={props.onOpen}
+              >
+                SignUp
+              </NavtabLink>
+            </NavbarMenuItem>
+          </>
+        )}
       </NavbarMenu>
     </Navbar>
   );
 }
 
-
-    {/* <Link
+{
+  /* <Link
                 // color={
                 //   menuItems.id === 2
                 //     ? "primary"
@@ -182,11 +223,14 @@ export default function Navtab(props) {
                 size="lg"
               >
                 {menuItems.pathname}
-              </Link> */}
+              </Link> */
+}
 
-
-{/* Good code */}
-      {/* <NavbarMenu className=" purple-dark bg-primary-900">
+{
+  /* Good code */
+}
+{
+  /* <NavbarMenu className=" purple-dark bg-primary-900">
         {loggedOutItems
           .map((menuItems) => (
             
@@ -201,4 +245,5 @@ export default function Navtab(props) {
           .slice(0,2)}
           
           
-      </NavbarMenu> */}              
+      </NavbarMenu> */
+}
