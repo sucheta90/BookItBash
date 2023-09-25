@@ -7,7 +7,7 @@ import { ADD_EVENT } from "../utils/mutations";
 import CardModal from "../components/Modals/CardModal";
 import axios from "axios";
 import { QUERY_ME } from "../utils/queries";
-import {concerts} from "../data/concert.js";
+import { concerts } from "../data/concert.js";
 
 export default function Homepage() {
   const [isMobile, setIsMobile] = useState(true);
@@ -16,18 +16,14 @@ export default function Homepage() {
   const [keyword, setKeyWord] = useState(""); // keyword search to fetch data
   const [openedEvent, setOpenedEvent] = useState(null); // for the modal button
 
-
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   // Add event mutation
   // eslint-disable-next-line no-unused-vars
   const [addEvent, { error, loading, data }] = useMutation(ADD_EVENT, {
-    refetchQueries: [
-      QUERY_ME,
-      'me'
-    ]
+    refetchQueries: [QUERY_ME, "me"],
   });
 
-  console.log('Demo Data', concerts);
+  console.log("Demo Data", concerts);
 
   // hook changes the state of isMobile on browser window resize
   useEffect(() => {
@@ -58,7 +54,7 @@ export default function Homepage() {
     console.log(`inside handleSubmit`);
     let query = keyword;
 
-    const queryStr = query.split(" ").join("%20");
+    const queryStr = query.split(" ").join("%20").toLowerCase();
 
     const search = await axios.get(
       `https://app.ticketmaster.com/discovery/v2/events?apikey=6VG1H9q8TAXG27aR4KLRsAbAgg5pkAY1&keyword=${queryStr}&locale=*&classificationName=music&preferredCountry=us`
@@ -111,18 +107,18 @@ export default function Homepage() {
       },
       ticketLink: result.url,
       type: result.type,
-        venue: [
-          {
-            address: result._embedded.venues[0].address.line1,
-            cityName: result._embedded.venues[0].city.name,
-            name: result._embedded.venues[0].name,
-            stateCode: result._embedded.venues[0].state?.stateCode ?? "N/A",
-            stateName: result._embedded.venues[0].state.name,
-            type: result._embedded.venues[0].type,
-            venueId: result._embedded.venues[0].id,
-          },
-        ],
-      };
+      venue: [
+        {
+          address: result._embedded.venues[0].address.line1,
+          cityName: result._embedded.venues[0].city.name,
+          name: result._embedded.venues[0].name,
+          stateCode: result._embedded.venues[0].state?.stateCode ?? "N/A",
+          stateName: result._embedded.venues[0].state.name,
+          type: result._embedded.venues[0].type,
+          venueId: result._embedded.venues[0].id,
+        },
+      ],
+    };
     // eslint-disable-next-line no-unused-vars
     const { data } = await addEvent({
       variables: {
@@ -241,76 +237,75 @@ export default function Homepage() {
           </Card>
         ))}
 
-        {searchData.length === 0 ?  concerts.map((result, index) => (
-          <Card
-            className="h-[13rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
-            key={result.id}
-            id={result.id}
-          >
-            <div className="eventDetails">
-              <div className="flex flex-row w-full justify-between">
-                <img
-                  src={result.images[4].url}
-                  alt="Event Image"
-                  className="w-[50px] h-[50px]"
-                />
-                <button>
-                  {activeStates[index] ? (
-                    <GoStarFill
-                      onClick={() => {
-                        toggleActive(index);
-                        // addevent
-                      }}
-                      className="w-[30px] h-[30px] text-secondary-50"
+        {searchData.length === 0
+          ? concerts.map((result, index) => (
+              <Card
+                className="h-[13rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
+                key={result.id}
+                id={result.id}
+              >
+                <div className="eventDetails">
+                  <div className="flex flex-row w-full justify-between">
+                    <img
+                      src={result.images[4].url}
+                      alt="Event Image"
+                      className="w-[50px] h-[50px]"
                     />
-                  ) : (
-                    <GoStar
-                      onClick={() => {
-                        toggleActive(index);
-                        handleSaveEvent(result);
-                      }}
-                      className="w-[30px] h-[30px] text-secondary-50"
-                    />
-                  )}
-                </button>
-              </div>
+                    <button>
+                      {activeStates[index] ? (
+                        <GoStarFill
+                          onClick={() => {
+                            toggleActive(index);
+                            // addevent
+                          }}
+                          className="w-[30px] h-[30px] text-secondary-50"
+                        />
+                      ) : (
+                        <GoStar
+                          onClick={() => {
+                            toggleActive(index);
+                            handleSaveEvent(result);
+                          }}
+                          className="w-[30px] h-[30px] text-secondary-50"
+                        />
+                      )}
+                    </button>
+                  </div>
 
-              <h1 className="eventTitle text-primary-50 font-bold">
-                {result.name}
-              </h1>
-              <h2 className="text-primary-50">
-                {result._embedded.venues[0].name},{" "}
-                {result._embedded.venues[0].city.name}
-              </h2>
-             
-              <h2 className="text-primary-50">
-                {result.dates.start.localDate}
-              </h2>
-              <div className="buyTicketButton">
-                <Button
-                  radius="full"
-                  className="bg-gradient-to-tr 
+                  <h1 className="eventTitle text-primary-50 font-bold">
+                    {result.name}
+                  </h1>
+                  <h2 className="text-primary-50">
+                    {result._embedded.venues[0].name},{" "}
+                    {result._embedded.venues[0].city.name}
+                  </h2>
+
+                  <h2 className="text-primary-50">
+                    {result.dates.start.localDate}
+                  </h2>
+                  <div className="buyTicketButton">
+                    <Button
+                      radius="full"
+                      className="bg-gradient-to-tr 
               from-primary-900 to-primary-500 
               text-primary-50 shadow-lg w-full"
-                  onPress={() => {
-                    onOpen();
-                    setOpenedEvent(result);
-                  }}
-                >
-                  
-                  Click to see more
-                
-                </Button>
-              </div>
-            </div>
-            <CardModal
-              onOpenChange={onOpenChange}
-              isOpen={isOpen}
-              event={openedEvent}
-            />
-          </Card>
-        )) : "" }
-
+                      onPress={() => {
+                        onOpen();
+                        setOpenedEvent(result);
+                      }}
+                    >
+                      Click to see more
+                    </Button>
+                  </div>
+                </div>
+                <CardModal
+                  onOpenChange={onOpenChange}
+                  isOpen={isOpen}
+                  event={openedEvent}
+                />
+              </Card>
+            ))
+          : ""}
       </Card>
     </>
   );
