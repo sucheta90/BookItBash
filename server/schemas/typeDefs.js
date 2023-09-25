@@ -20,6 +20,7 @@ type Event {
     segment: Segment
     genre: Genre
     subGenre: SubGenre
+    date: String
 }
 
 type Venue {
@@ -75,6 +76,7 @@ input EventData {
     segment: SegmentData
     genre: GenreData
     subGenre: SubGenreData
+    date: String
 }
 
 input VenueData {

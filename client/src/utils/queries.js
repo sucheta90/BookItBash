@@ -59,6 +59,7 @@ query me {
             subGenreId
             name
           }
+          date
         }
         password
         username
@@ -107,6 +108,7 @@ query getSingleEvent($id: ID!) {
           subGenreId
           name
         }
+        date
       }
   }
 
