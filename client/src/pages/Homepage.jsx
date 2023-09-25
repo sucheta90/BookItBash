@@ -105,6 +105,7 @@ export default function Homepage() {
         name: result.classifications[0].subGenre?.name ?? "N/A",
         subGenreId: result.classifications[0].subGenre.id,
       },
+      date: result.dates.start.localDate,
       ticketLink: result.url,
       type: result.type,
       venue: [

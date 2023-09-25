@@ -93,7 +93,7 @@ console.log(user.events);
             </Card>
             {user.events.length > 0 ? user.events.map((result, index) => (
           <Card
-            className="h-[11rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
+            className="h-[12rem] space-y-5 p-4 bg-primary-900 rounded-xl mb-1 mx-1"
             key={result._id}
             id={result._id}
           >
@@ -140,9 +140,9 @@ console.log(user.events);
                 {result.venue[0].cityName}
               </h2>
               {/* {console.log((`New Date obj ${new Date(result.dates.start.localDate)}`).split(" "))} */}
-              {/* <h2 className="text-primary-50">
-                {result.dates.start.localDate}
-              </h2> */}
+              <h2 className="text-primary-50">
+                {result.date}
+              </h2>
               <div className="buyTicketButton">
                 <Button
                   radius="full"
