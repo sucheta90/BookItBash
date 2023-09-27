@@ -2,7 +2,7 @@ export const concerts = [
   {
     name: "Corey Taylor",
     type: "event",
-    id: "vvG1fZ9nIC-bNP",
+    id: "banana-1",
     test: false,
     url: "https://concerts.livenation.com/corey-taylor-cleveland-ohio-09-07-2023/event/05005EAA0E8588E5",
     locale: "en-us",

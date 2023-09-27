@@ -83,7 +83,7 @@ function App() {
       <Navtab onOpen={handleShowForm}/>
       <Login isOpen={showLogin}   onClose={closeModal} handleShowForm={handleShowForm}/>
       
-      <Signup isOpen={showSignup}  onClose={closeModal}/>
+      <Signup isOpen={showSignup}  onClose={closeModal} />
 
       <div >
         <div className='purple-dark h-full w-full flex justify-center'>

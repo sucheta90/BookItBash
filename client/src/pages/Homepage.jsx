@@ -12,6 +12,7 @@ import { concerts } from "../data/concert.js";
 export default function Homepage() {
   const [isMobile, setIsMobile] = useState(true);
   const [searchData, setSearchData] = useState([]);
+  const [updatedSearchData, setUpdatedSearchData] = useState([]);
   const [activeStates, setActiveStates] = useState([]);
   const [keyword, setKeyWord] = useState(""); // keyword search to fetch data
   const [openedEvent, setOpenedEvent] = useState(null); // for the modal button
@@ -21,6 +22,9 @@ export default function Homepage() {
   // eslint-disable-next-line no-unused-vars
   const [addEvent, { error, loading, data }] = useMutation(ADD_EVENT, {
     refetchQueries: [QUERY_ME, "me"],
+    onCompleted: () => {
+      window.location.reload();
+    },
   });
 
   console.log("Demo Data", concerts);
@@ -120,12 +124,25 @@ export default function Homepage() {
         },
       ],
     };
+    const updatedData = [...searchData, result];
+    setUpdatedSearchData(updatedData);
     // eslint-disable-next-line no-unused-vars
-    const { data } = await addEvent({
-      variables: {
-        event,
-      },
-    });
+    try {
+      await addEvent({
+        variables: {
+          event: event,
+        },
+        onCompleted: (data) => {
+          console.log("Mutation completed with data:", data);
+        },
+      });
+    } catch (error) {
+      console.log(error);
+
+      setUpdatedSearchData(
+        updatedSearchData.filter((event) => event.id !== result.id)
+      );
+    }
   };
   // if (error) {
   //   console.log(error);
